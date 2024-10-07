@@ -1,2 +1,1 @@
-# color-palette
-🎨 color palette website
+https://blog.gxres.net/posts/first-try-svelte-and-sveltekit
