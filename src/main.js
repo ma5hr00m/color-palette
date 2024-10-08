@@ -1,7 +1,7 @@
 // @ts-nocheck
-import './app.css'
+import './style/style.css'
 import App from './App.svelte'
-import 'unocss'
+import "uno.css"
 
 const app = new App({
   target: document.getElementById('app'),
