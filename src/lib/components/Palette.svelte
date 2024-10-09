@@ -1,5 +1,7 @@
 <script>
   import { onMount } from 'svelte';
+  import { colorStore } from '../stores/stores';
+  import Icon from '@iconify/svelte';
 
   let selectedColor = 'rgba(255, 0, 0, 1)';
   let hexColor = '#ff0000';
@@ -8,6 +10,7 @@
   let isDragging = false;
   let offscreenCanvas;
   let offscreenCtx;
+  let isHexUpperCase = false;
 
   var getPixelRatio = function(context) {
     var backingStore = context.backingStorePixelRatio ||
@@ -132,31 +135,57 @@
     const pixelData = ctx.getImageData(x, y, 1, 1).data;
     selectedColor = `rgba(${pixelData[0]}, ${pixelData[1]}, ${pixelData[2]}, 1)`;
     hexColor = rgbToHex(pixelData[0], pixelData[1], pixelData[2]);
+
+    colorStore.set({rgbaColor: selectedColor, hexColor: hexColor});
   }
 
   function rgbToHex(r, g, b) {
     return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
   }
+
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      console.log('Copied to clipboard:', text);
+    });
+  }
+
+  function toggleHexColorCase() {
+    isHexUpperCase = !isHexUpperCase;
+  }
+
+  $: displayHexColor = isHexUpperCase ? hexColor.toUpperCase() : hexColor.toLowerCase();
 </script>
 
-<main class="flex flex-col items-center">
-  <div class="w-80 h-80 overflow-hidden rounded-full flex justify-center items-center">
+<div class="bg-white shadow-sm w-fit p8 rounded-md flex flex-col items-center gap-y-8">
+  <div class="w-60 h-60 overflow-hidden rounded-full flex justify-center items-center">
     <canvas 
-    bind:this={canvas} 
-    class="w-80.5 h-80.5 cursor-cell rounded-full" 
-    on:mousedown={handleMouseDown} 
-    on:mousemove={handleMouseMove} 
-    on:mouseup={handleMouseUp} 
-    on:mouseleave={handleMouseUp}></canvas>
+      bind:this={canvas} 
+      class="w-80.5 h-80.5 cursor-cell rounded-full" 
+      on:mousedown={handleMouseDown} 
+      on:mousemove={handleMouseMove} 
+      on:mouseup={handleMouseUp} 
+      on:mouseleave={handleMouseUp}></canvas>
   </div>
-  
-  <div class="mt-2 text-lg">
-    <div>Selected Color: {selectedColor}</div>
-    <div>Hex Color: {hexColor}</div>
+  <div class="text-lg color-gray-6 flex flex-col items-center gap-y-3">
+    <div class="w-44 text-3.5 bg-gray-1 py1 px3 rounded-md flex justify-between items-center">
+      <div>{selectedColor}</div>
+      <div class="flex gap-x-.5">
+        <button class="cursor-pointer w-6.5 h-6.5 flex justify-center items-center border-none rounded-md color-gray-5 bg-transparent duration-300 hover:bg-gray-2 hover:color-gray-7" on:click={() => copyToClipboard(selectedColor)}>
+          <Icon icon="solar:copy-linear" />
+        </button>
+      </div>
+    </div>
+    <div class="w-44 text-3.5 bg-gray-1 py1 px3 rounded-md flex justify-between items-center">
+      <div>{displayHexColor}</div>
+      <div class="flex gap-x-.5">
+        <button class="cursor-pointer w-6.5 h-6.5 flex justify-center items-center border-none rounded-md color-gray-5 bg-transparent duration-300 hover:bg-gray-2 hover:color-gray-7" on:click={toggleHexColorCase}>
+          <Icon icon="radix-icons:letter-case-capitalize" />
+        </button>
+        <button class="cursor-pointer w-6.5 h-6.5 flex justify-center items-center border-none rounded-md color-gray-5 bg-transparent duration-300 hover:bg-gray-2 hover:color-gray-7" on:click={() => copyToClipboard(displayHexColor)}>
+          <Icon icon="solar:copy-linear" />
+        </button>
+      </div>
+    </div>
   </div>
-  
-  <div 
-    id="current-color" 
-    class="w-10 h-10 rounded-full" 
-    style="background-color: {selectedColor};"></div>
-</main>
+</div>
+

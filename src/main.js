@@ -1,5 +1,5 @@
 // @ts-nocheck
-import './style/style.css'
+import './style/style.scss'
 import App from './App.svelte'
 import "uno.css"
 
