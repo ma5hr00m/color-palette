@@ -15,6 +15,17 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+:root::-webkit-scrollbar {
+  display: none; /* Chrome Safari */
+}
+
+:root {
+  scrollbar-width: none; /* firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 body {
   margin: 0;
   display: flex;

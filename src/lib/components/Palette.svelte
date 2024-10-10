@@ -168,7 +168,7 @@
   </div>
   <div class="text-lg color-gray-6 flex flex-col items-center gap-y-3">
     <div class="w-44 text-3.25 bg-gray-1 py1 px3 rounded-md flex justify-between items-center">
-      <div>{selectedColor}</div>
+      <div class="select-none">{selectedColor}</div>
       <div class="flex gap-x-.5">
         <button class="cursor-pointer w-6.5 h-6.5 flex justify-center items-center border-none rounded-md color-gray-5 bg-transparent duration-300 hover:bg-gray-2 hover:color-gray-7" on:click={() => copyToClipboard(selectedColor)}>
           <Icon icon="solar:copy-linear" />
@@ -176,7 +176,7 @@
       </div>
     </div>
     <div class="w-44 text-3.25 bg-gray-1 py1 px3 rounded-md flex justify-between items-center">
-      <div>{displayHexColor}</div>
+      <div class="select-none">{displayHexColor}</div>
       <div class="flex gap-x-.5">
         <button class="cursor-pointer w-6.5 h-6.5 flex justify-center items-center border-none rounded-md color-gray-5 bg-transparent duration-300 hover:bg-gray-2 hover:color-gray-7" on:click={toggleHexColorCase}>
           <Icon icon="radix-icons:letter-case-capitalize" />
