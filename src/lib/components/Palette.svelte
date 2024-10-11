@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { colorStore } from '../stores/stores';
   import Icon from '@iconify/svelte';
+  import Popup from './Popup.svelte';
 
   let selectedColor = 'rgba(255, 0, 0, 1)';
   let hexColor = '#ff0000';
@@ -11,6 +12,7 @@
   let offscreenCanvas;
   let offscreenCtx;
   let isHexUpperCase = false;
+  let showPopup = false;
 
   var getPixelRatio = function(context) {
     var backingStore = context.backingStorePixelRatio ||
@@ -146,6 +148,10 @@
   function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
       console.log('Copied to clipboard:', text);
+      showPopup = true;
+      setTimeout(() => {
+        showPopup = false;
+      }, 2000);
     });
   }
 
@@ -189,3 +195,7 @@
   </div>
 </div>
 
+<Popup isOpen={showPopup} onClose={() => showPopup = false}>
+  <Icon class="w-3.25 h-3.25 color-green-500" icon="icon-park-solid:correct" />
+  <span class="text-3 font-400 color-gray-7">複製成功</span>
+</Popup>

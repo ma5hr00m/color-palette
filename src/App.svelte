@@ -2,8 +2,10 @@
   import { Router, Route } from 'svelte-routing';
   import Home from './lib/pages/Home.svelte';
   import Header from './lib/components/Header.svelte';
-    import Color from './lib/pages/Color.svelte';
-    import Picker from './lib/pages/Picker.svelte';
+  import Color from './lib/pages/Color.svelte';
+  import Icon from '@iconify/svelte';
+  import Picker from './lib/pages/Picker.svelte';
+  import Test from './lib/pages/Test.svelte';
 </script>
 
 <svelte:head>
@@ -17,9 +19,16 @@
 
 <Router>
   <Header></Header>
-  <div class="flex-1 w-full mx5 flex justify-center">
+  <div class="flex-1 w-full mx5 hidden md:flex justify-center">
     <Route path="/" component={Home} />
     <Route path="/color" component={Color} />
-    <Route path="/picker" component={Picker} />
+    <!-- <Route path="/picker" component={Picker} /> -->
+    <Route path="/test" component={Test} />
+  </div>
+  <div class="flex-1 w-full mx5 flex md:hidden items-center justify-center">
+    <div class="flex justify-center items-center gap-x-1 p4 bg-white shadow-md rounded-md">
+      <Icon class="color-gray-7 w-4.5 h-4.5" icon="akar-icons:question" />
+      <span class="color-gray-7 text-3.25">什么场景下需要在移动端使用色卡？</span>
+    </div>
   </div>
 </Router>

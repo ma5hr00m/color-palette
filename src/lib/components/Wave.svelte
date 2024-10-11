@@ -14,18 +14,19 @@
 </script>
 
 <div class="page">
-  <svg class="waves" viewBox="0 24 150 24" preserveAspectRatio="none">
+  <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+    viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
     <defs>
-      <path id="wave" d="M-160 34c30 0 58-10 88-10s58 10 88 10 58-10 88-10 58 10 88 10 v44h-352z" />
+      <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
     </defs>
-    <g>
-      <use class="wave" xlink:href="#wave" fill={currentColor} opacity="0.5" x="50" y="0"></use>
-      <use class="wave" xlink:href="#wave" fill={currentColor} opacity="0.5" x="50" y="2"></use>
-      <use class="wave" xlink:href="#wave" fill={currentColor} opacity="1.0" x="50" y="4"></use>
+    <g class="parallax">
+      <use xlink:href="#gentle-wave" x="48" y="0" fill={currentColor} />
+      <use xlink:href="#gentle-wave" x="48" y="3" fill={currentColor} />
+      <use xlink:href="#gentle-wave" x="48" y="5" fill={currentColor} />
+      <use xlink:href="#gentle-wave" x="48" y="7" fill={currentColor} />
     </g>
   </svg>
 </div>
-
 
 <style lang="scss">
   .page {
@@ -34,42 +35,64 @@
     position: relative;
     overflow: hidden;
     background-color: transparent;
+  }
+  .waves {
+    position: relative;
+    width: 100%;
+    height: 15vh;
+    margin-bottom: -7px;
+    min-height: 100px;
+    max-height: 150px;
+  }
+  .content {
+    position: relative;
+    height: 20vh;
+    text-align: center;
+    background-color: white;
+  }
 
-    .waves {
-      width: 100%;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      z-index: 1;
-
-      .wave {
-        animation: move linear infinite;
-        animation-fill-mode: forwards;
-
-        &:nth-child(1) {
-          animation-duration: 8s;
-          animation-delay: 5s;
-        }
-
-        &:nth-child(2) {
-          animation-duration: 10s;
-          animation-delay: 2s;
-        }
-
-        &:nth-child(3) {
-          animation-duration: 12s;
-          animation-delay: 0s;
-        }
-      }
+  .parallax > use {
+    animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+  }
+  .parallax > use:nth-child(1) {
+    animation-delay: -2s;
+    animation-duration: 7s;
+  }
+  .parallax > use:nth-child(2) {
+    opacity: 0.5;
+    animation-delay: -3s;
+    animation-duration: 10s;
+  }
+  .parallax > use:nth-child(3) {
+    opacity: 0.3;
+    animation-delay: -4s;
+    animation-duration: 13s;
+  }
+  .parallax > use:nth-child(4) {
+    opacity: 0.2;
+    animation-delay: -5s;
+    animation-duration: 20s;
+  }
+  @keyframes move-forever {
+    0% {
+      transform: translate3d(-90px, 0, 0);
+    }
+    100% {
+      transform: translate3d(85px, 0, 0);
     }
   }
 
-  @keyframes move {
-    from {
-      transform: translate(-90px, 0);
+  /* Shrinking for mobile */
+  @media (max-width: 768px) {
+    .waves {
+      height: 40px;
+      min-height: 40px;
     }
-    to {
-      transform: translate(70px, 0);
+    .content {
+      height: 30vh;
+    }
+    h1 {
+      font-size: 24px;
     }
   }
 </style>
