@@ -134,7 +134,7 @@
       on:mouseleave={handleMouseUp}></canvas>
   </div>
   <div class="text-lg color-gray-600 flex flex-col items-center gap-y-2vh">
-    <div class="w-22vh text-1.6vh bg-gray-100 py-1vh px-2vh rounded-md flex justify-between items-center">
+    <div class="w-22vh text-1.3vh bg-gray-100 py-1vh px-2vh rounded-md flex justify-between items-center">
       <div class="select-none">{selectedColor}</div>
       <div class="flex">
         <button class="cursor-pointer w-4vh h-4vh flex justify-center items-center border-none rounded-md color-gray-500 bg-transparent duration-300 hover:bg-gray-200 hover:color-gray-700" on:click={() => copyToClipboard(selectedColor)}>
@@ -142,7 +142,7 @@
         </button>
       </div>
     </div>
-    <div class="w-22vh text-1.6vh bg-gray-100 py-1vh px-2vh rounded-md flex justify-between items-center">
+    <div class="w-22vh text-1.3vh bg-gray-100 py-1vh px-2vh rounded-md flex justify-between items-center">
       <div class="select-none">{displayHexColor}</div>
       <div class="flex gap-x-.5">
         <button class="cursor-pointer w-4vh h-4vh flex justify-center items-center border-none rounded-md color-gray-500 bg-transparent duration-300 hover:bg-gray-200 hover:color-gray-700"  on:click={toggleHexColorCase}>
