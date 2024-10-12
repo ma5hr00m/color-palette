@@ -16,14 +16,20 @@
 }
 
 :root::-webkit-scrollbar {
-  display: none; /* Chrome Safari */
+  display: none;
 }
 
 :root {
-  scrollbar-width: none; /* firefox */
-  -ms-overflow-style: none; /* IE 10+ */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {

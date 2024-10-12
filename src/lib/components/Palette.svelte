@@ -3,6 +3,7 @@
   import { colorStore } from '../stores/stores';
   import Icon from '@iconify/svelte';
   import Popup from './Popup.svelte';
+  import { getPixelRatio, hslToRgb, rgbToHex } from '../utils/palette';
 
   let selectedColor = 'rgba(255, 0, 0, 1)';
   let hexColor = '#ff0000';
@@ -13,17 +14,6 @@
   let offscreenCtx;
   let isHexUpperCase = false;
   let showPopup = false;
-
-  var getPixelRatio = function(context) {
-    var backingStore = context.backingStorePixelRatio ||
-          context.webkitBackingStorePixelRatio ||
-          context.mozBackingStorePixelRatio ||
-          context.msBackingStorePixelRatio ||
-          context.oBackingStorePixelRatio ||
-          context.backingStorePixelRatio || 1;
-
-    return (window.devicePixelRatio || 1) / backingStore;
-  };
 
   onMount(() => {
     ctx = canvas.getContext('2d', { willReadFrequently: true });
@@ -79,31 +69,6 @@
     ctx.stroke();
   }
 
-  function hslToRgb(h, s, l) {
-    let r, g, b;
-
-    if (s === 0) {
-      r = g = b = l;
-    } else {
-      const hue2rgb = function(p, q, t) {
-        if (t < 0) t += 1;
-        if (t > 1) t -= 1;
-        if (t < 1 / 6) return p + (q - p) * 6 * t;
-        if (t < 1 / 2) return q;
-        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-        return p;
-      };
-
-      const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-      const p = 2 * l - q;
-      r = hue2rgb(p, q, h / 360 + 1 / 3);
-      g = hue2rgb(p, q, h / 360);
-      b = hue2rgb(p, q, h / 360 - 1 / 3);
-    }
-
-    return { r: Math.round(r * 255), g: Math.round(g * 255), b: Math.round(b * 255) };
-  }
-
   function handleMouseMove(event) {
     if (isDragging) {
       updateColor(event);
@@ -138,11 +103,7 @@
     selectedColor = `rgba(${pixelData[0]}, ${pixelData[1]}, ${pixelData[2]}, 1)`;
     hexColor = rgbToHex(pixelData[0], pixelData[1], pixelData[2]);
 
-    colorStore.set({rgbaColor: selectedColor, hexColor: hexColor});
-  }
-
-  function rgbToHex(r, g, b) {
-    return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+    colorStore.set({ rgbaColor: selectedColor, hexColor: hexColor });
   }
 
   function copyToClipboard(text) {
@@ -156,39 +117,39 @@
   }
 
   function toggleHexColorCase() {
-    isHexUpperCase = !isHexUpperCase;
+    isHexUpperCase = !isHexUpperCase
   }
 
   $: displayHexColor = isHexUpperCase ? hexColor.toUpperCase() : hexColor.toLowerCase();
 </script>
 
-<div class="bg-white shadow-md w-fit p10 rounded-md flex flex-col items-center gap-y-8">
-  <div class="w-56 h-56 overflow-hidden rounded-full flex justify-center items-center">
+<div class="bg-white shadow-md w-fit p-5vh rounded-md flex flex-col items-center gap-y-4vh">
+  <div class="w-30vh h-30vh overflow-hidden rounded-full flex justify-center items-center">
     <canvas 
       bind:this={canvas} 
-      class="w-80.5 h-80.5 cursor-cell rounded-full" 
+      class="w-30vh h-30vh cursor-cell rounded-full" 
       on:mousedown={handleMouseDown} 
       on:mousemove={handleMouseMove} 
       on:mouseup={handleMouseUp} 
       on:mouseleave={handleMouseUp}></canvas>
   </div>
-  <div class="text-lg color-gray-6 flex flex-col items-center gap-y-3">
-    <div class="w-44 text-3.25 bg-gray-1 py1 px3 rounded-md flex justify-between items-center">
+  <div class="text-lg color-gray-600 flex flex-col items-center gap-y-2vh">
+    <div class="w-22vh text-1.6vh bg-gray-100 py-1vh px-2vh rounded-md flex justify-between items-center">
       <div class="select-none">{selectedColor}</div>
-      <div class="flex gap-x-.5">
-        <button class="cursor-pointer w-6.5 h-6.5 flex justify-center items-center border-none rounded-md color-gray-5 bg-transparent duration-300 hover:bg-gray-2 hover:color-gray-7" on:click={() => copyToClipboard(selectedColor)}>
-          <Icon icon="solar:copy-linear" />
+      <div class="flex">
+        <button class="cursor-pointer w-4vh h-4vh flex justify-center items-center border-none rounded-md color-gray-500 bg-transparent duration-300 hover:bg-gray-200 hover:color-gray-700" on:click={() => copyToClipboard(selectedColor)}>
+          <Icon class="w-1.75vh h-1.75vh" icon="solar:copy-linear" />
         </button>
       </div>
     </div>
-    <div class="w-44 text-3.25 bg-gray-1 py1 px3 rounded-md flex justify-between items-center">
+    <div class="w-22vh text-1.6vh bg-gray-100 py-1vh px-2vh rounded-md flex justify-between items-center">
       <div class="select-none">{displayHexColor}</div>
       <div class="flex gap-x-.5">
-        <button class="cursor-pointer w-6.5 h-6.5 flex justify-center items-center border-none rounded-md color-gray-5 bg-transparent duration-300 hover:bg-gray-2 hover:color-gray-7" on:click={toggleHexColorCase}>
-          <Icon icon="radix-icons:letter-case-capitalize" />
+        <button class="cursor-pointer w-4vh h-4vh flex justify-center items-center border-none rounded-md color-gray-500 bg-transparent duration-300 hover:bg-gray-200 hover:color-gray-700"  on:click={toggleHexColorCase}>
+          <Icon class="w-1.75vh h-1.75vh" icon="radix-icons:letter-case-capitalize" />
         </button>
-        <button class="cursor-pointer w-6.5 h-6.5 flex justify-center items-center border-none rounded-md color-gray-5 bg-transparent duration-300 hover:bg-gray-2 hover:color-gray-7" on:click={() => copyToClipboard(displayHexColor)}>
-          <Icon icon="solar:copy-linear" />
+        <button class="cursor-pointer w-4vh h-4vh flex justify-center items-center border-none rounded-md color-gray-500 bg-transparent duration-300 hover:bg-gray-200 hover:color-gray-700"  on:click={() => copyToClipboard(displayHexColor)}>
+          <Icon class="w-1.75vh h-1.75vh" icon="solar:copy-linear" />
         </button>
       </div>
     </div>
@@ -196,6 +157,6 @@
 </div>
 
 <Popup isOpen={showPopup} onClose={() => showPopup = false}>
-  <Icon class="w-3.25 h-3.25 color-green-500" icon="icon-park-solid:correct" />
-  <span class="text-3 font-400 color-gray-7">複製成功</span>
+  <Icon class="w-2vh h-2vh color-green-500" icon="icon-park-solid:correct" />
+  <span class="text-2vh font-400 color-gray-700">複製成功</span>
 </Popup>

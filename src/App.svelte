@@ -1,7 +1,7 @@
 <script>
 	import { colorGroupStore } from './lib/stores/stores.js';
   import { onMount } from 'svelte';
-  import { loadYaml } from './utils/loadYaml';
+  import { loadYaml } from './lib/utils/loadYaml.js';
   import { Router, Route } from 'svelte-routing';
   import Home from './lib/pages/Home.svelte';
   import Header from './lib/components/Header.svelte';

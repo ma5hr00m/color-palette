@@ -4,7 +4,19 @@
 #   - name: "YOUR-COLOR-NAME"
 #   - color: "YOUR-COLOR"
 
-unocss:
+"Vidar-Team":
+  - name: primary
+    color: "#3b82f6"
+  - name: secondary
+    color: "#6366f1"
+  - name: success
+    color: "#10b981"
+  - name: warning
+    color: "#f59e0b"
+  - name: danger
+    color: "#ef4444"
+
+"UnoCSS":
   - name: red-100
     color: "#fee2e2"
   - name: red-200

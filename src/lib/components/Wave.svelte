@@ -28,7 +28,7 @@
   </svg>
 </div>
 
-<style lang="scss">
+<style>
   .page {
     width: 100%;
     height: 100%;
@@ -43,12 +43,6 @@
     margin-bottom: -7px;
     min-height: 100px;
     max-height: 150px;
-  }
-  .content {
-    position: relative;
-    height: 20vh;
-    text-align: center;
-    background-color: white;
   }
 
   .parallax > use {
@@ -87,12 +81,6 @@
     .waves {
       height: 40px;
       min-height: 40px;
-    }
-    .content {
-      height: 30vh;
-    }
-    h1 {
-      font-size: 24px;
     }
   }
 </style>
