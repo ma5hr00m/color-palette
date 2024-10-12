@@ -1,11 +1,24 @@
 <script>
+	import { colorGroupStore } from './lib/stores/stores.js';
+  import { onMount } from 'svelte';
+  import { loadYaml } from './utils/loadYaml';
   import { Router, Route } from 'svelte-routing';
   import Home from './lib/pages/Home.svelte';
   import Header from './lib/components/Header.svelte';
   import Color from './lib/pages/Color.svelte';
   import Icon from '@iconify/svelte';
-  import Picker from './lib/pages/Picker.svelte';
+  // import Picker from './lib/pages/Picker.svelte';
   import Test from './lib/pages/Test.svelte';
+
+  let colorGroup = {};
+
+  onMount(async () => {
+    colorGroup = await loadYaml('color.yaml');
+    colorGroupStore.set(colorGroup);
+    colorGroupStore.subscribe(value => {
+      console.log('Color Group Store:', value);
+    });
+  });
 </script>
 
 <svelte:head>

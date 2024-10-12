@@ -2,6 +2,7 @@
 	import { fade } from 'svelte/transition';
   import Icon from '@iconify/svelte';
 	import Popup from '../components/Popup.svelte';
+  import Hard from '../components/Hard.svelte';
 
   const colors = [
     'red', 'orange', 'amber', 'yellow', 'lime', 'green', 
@@ -79,18 +80,18 @@
       </button>
     </div>
   </div>
-  <div class="w-full max-w-1180px mx8 mx4 overflow-hidden flex flex-wrap justify-center gap-3 pt1 pb10">
+  <div class="w-full max-w-1140px mx4 overflow-hidden flex flex-wrap justify-center flex-wrap pt1 pb10">
 		{#each colors as color}
 			{#each shades as shade, index}
 				{#if shade !== 0}
 					<button 
-						class={`group border-none color-gray-8 shadow-md w-30 h-10 rounded-md cursor-pointer bg-${color}-${shade} text-2 flex flex-col items-center justify-center gap-y-.5 duration-300 hover:scale-110`}
+						class={`group flex-grow flex-basis-1/10 border-none m1 color-gray-8 shadow-md w-30 h-10 rounded-md cursor-pointer bg-${color}-${shade} text-2 flex flex-col items-center justify-center gap-y-.5 duration-300 hover:scale-110`}
 						on:click={() => copyToClipboard(showHex ? (hexUpperCase ? getColorValues(color, shade).hex.toUpperCase() : getColorValues(color, shade).hex) : getColorValues(color, shade).rgba)}
 						aria-label={`已複製 ${showHex ? (hexUpperCase ? getColorValues(color, shade).hex.toUpperCase() : getColorValues(color, shade).hex) : getColorValues(color, shade).rgba}`}
 						transition:fade={{ duration: 3000, delay: index * 50 }}
 					>
-						<span class={`${shade >= 100 && shade <= 400 ? 'color-gray-8' : 'color-gray-1'} select-none text-3`}>{color}-{shade}</span>
-						<span class={`${shade >= 100 && shade <= 400 ? 'color-gray-8' : 'color-gray-1'} select-none text-2.5 duration-300 animate-ease-in group-hover:opacity-100 group-hover:blur-0`} id="color">{showHex ? (hexUpperCase ? getColorValues(color, shade).hex.toUpperCase() : getColorValues(color, shade).hex) : getColorValues(color, shade).rgba}</span>
+						<span class={`${shade >= 100 && shade <= 400 ? 'color-gray-8' : 'color-gray-1'} text-3`}>{color}-{shade}</span>
+						<span class={`${shade >= 100 && shade <= 400 ? 'color-gray-8' : 'color-gray-1'} text-2.5 duration-300 animate-ease-in group-hover:opacity-100 group-hover:blur-0`} id="color">{showHex ? (hexUpperCase ? getColorValues(color, shade).hex.toUpperCase() : getColorValues(color, shade).hex) : getColorValues(color, shade).rgba}</span>
 					</button>
 				{/if}
 			{/each}
