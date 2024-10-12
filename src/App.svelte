@@ -13,7 +13,7 @@
   let colorGroup = {};
 
   onMount(async () => {
-    colorGroup = await loadYaml('color.yaml');
+    colorGroup = await loadYaml('/color.yaml');
     colorGroupStore.set(colorGroup);
     colorGroupStore.subscribe(value => {
       console.log('Color Group Store:', value);
